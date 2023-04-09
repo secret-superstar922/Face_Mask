@@ -5,7 +5,7 @@ def load_model(params_file, model_file, use_gpu=False, use_mkl=False, mkl_thread
     config = fluid.core.AnalysisConfig(model_file, params_file)
 
     if use_gpu:
-        # 设置GPU初始显存(单位M)和Device ID
+
         config.enable_use_gpu(100, 0)
     else:
         config.disable_gpu()
@@ -15,9 +15,9 @@ def load_model(params_file, model_file, use_gpu=False, use_mkl=False, mkl_thread
     config.disable_glog_info()
     config.enable_memory_optim()
 
-    # 开启计算图分析优化，包括OP融合等
+
     config.switch_ir_optim(True)
-    # 关闭feed和fetch OP使用，使用ZeroCopy接口必须设置此项
+    
     config.switch_use_feed_fetch_ops(False)
     predictor = fluid.core.create_paddle_predictor(config)
     return predictor
